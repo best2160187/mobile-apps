@@ -43,7 +43,7 @@ void main() {
   });
 
   testWidgets('Passing no AppBarTheme returns defaults', (WidgetTester tester) async {
-    final ThemeData theme = ThemeData();
+    final ThemeData theme = ThemeData(useMaterial3: true);
     await tester.pumpWidget(
       MaterialApp(
         theme: theme,
@@ -67,13 +67,13 @@ void main() {
       expect(SystemChrome.latestStyle!.statusBarBrightness, Brightness.light);
       expect(widget.color, theme.colorScheme.surface);
       expect(widget.elevation, 0);
-      expect(widget.shadowColor, null);
+      expect(widget.shadowColor, Colors.transparent);
       expect(widget.surfaceTintColor, theme.colorScheme.surfaceTint);
       expect(widget.shape, null);
       expect(iconTheme.data, IconThemeData(color: theme.colorScheme.onSurface, size: 24));
       expect(actionsIconTheme.data, IconThemeData(color: theme.colorScheme.onSurfaceVariant, size: 24));
-      expect(actionIconText.text.style!.color, Colors.black);
-      expect(text.style, Typography.material2021().englishLike.bodyMedium!.merge(Typography.material2021().black.bodyMedium).copyWith(color: theme.colorScheme.onSurface));
+      expect(actionIconText.text.style!.color, theme.colorScheme.onSurfaceVariant);
+      expect(text.style, Typography.material2021().englishLike.bodyMedium!.merge(Typography.material2021().black.bodyMedium).copyWith(color: theme.colorScheme.onSurface, decorationColor: theme.colorScheme.onSurface));
       expect(tester.getSize(find.byType(AppBar)).height, kToolbarHeight);
       expect(tester.getSize(find.byType(AppBar)).width, 800);
     } else {
@@ -262,7 +262,7 @@ void main() {
     if (lightTheme.useMaterial3) {
       // M3 AppBar defaults for light themes:
       // - elevation: 0
-      // - shadow color: null
+      // - shadow color: Colors.transparent
       // - surface tint color: ColorScheme.surfaceTint
       // - background color: ColorScheme.surface
       // - foreground color: ColorScheme.onSurface
@@ -280,7 +280,7 @@ void main() {
         expect(SystemChrome.latestStyle!.statusBarBrightness, Brightness.light);
         expect(widget.color, lightTheme.colorScheme.surface);
         expect(widget.elevation, 0);
-        expect(widget.shadowColor, null);
+        expect(widget.shadowColor, Colors.transparent);
         expect(widget.surfaceTintColor, lightTheme.colorScheme.surfaceTint);
         expect(iconTheme.data.color, lightTheme.colorScheme.onSurface);
         expect(actionsIconTheme.data.color, lightTheme.colorScheme.onSurface);
@@ -290,14 +290,14 @@ void main() {
 
       // M3 AppBar defaults for dark themes:
       // - elevation: 0
-      // - shadow color: null
+      // - shadow color: Colors.transparent
       // - surface tint color: ColorScheme.surfaceTint
       // - background color: ColorScheme.surface
       // - foreground color: ColorScheme.onSurface
       // - actions text: style bodyMedium, foreground color
       // - status bar brightness: dark (based on background color)
       {
-        await tester.pumpWidget(buildFrame(ThemeData.from(colorScheme: const ColorScheme.dark())));
+        await tester.pumpWidget(buildFrame(darkTheme));
         await tester.pumpAndSettle(); // Theme change animation
 
         final Material widget = _getAppBarMaterial(tester);
@@ -309,12 +309,12 @@ void main() {
         expect(SystemChrome.latestStyle!.statusBarBrightness, Brightness.dark);
         expect(widget.color, darkTheme.colorScheme.surface);
         expect(widget.elevation, 0);
-        expect(widget.shadowColor, null);
+        expect(widget.shadowColor, Colors.transparent);
         expect(widget.surfaceTintColor, darkTheme.colorScheme.surfaceTint);
         expect(iconTheme.data.color, darkTheme.colorScheme.onSurface);
         expect(actionsIconTheme.data.color, darkTheme.colorScheme.onSurface);
         expect(actionIconText.text.style!.color, darkTheme.colorScheme.onSurface);
-        expect(text.style, Typography.material2021().englishLike.bodyMedium!.merge(Typography.material2021().black.bodyMedium).copyWith(color: darkTheme.colorScheme.onSurface));
+        expect(text.style, Typography.material2021().englishLike.bodyMedium!.merge(Typography.material2021().black.bodyMedium).copyWith(color: darkTheme.colorScheme.onSurface, decorationColor: darkTheme.colorScheme.onSurface));
       }
     } else {
       // AppBar defaults for light themes:
@@ -751,7 +751,7 @@ void main() {
     // Test title spacing.
     final Finder collapsedTitle = find.text(title).last;
     final Offset titleOffset = tester.getTopLeft(collapsedTitle);
-    final Offset iconOffset = tester.getTopRight(find.widgetWithIcon(IconButton, Icons.menu));
+    final Offset iconOffset = tester.getTopRight(find.ancestor(of: find.widgetWithIcon(IconButton, Icons.menu), matching: find.byType(ConstrainedBox)));
     expect(titleOffset.dx, iconOffset.dx + appBarTheme.titleSpacing!);
   });
 
@@ -828,7 +828,7 @@ void main() {
     // Test title spacing.
     final Finder collapsedTitle = find.text(title).last;
     final Offset titleOffset = tester.getTopLeft(collapsedTitle);
-    final Offset iconOffset = tester.getTopRight(find.widgetWithIcon(IconButton, Icons.menu));
+    final Offset iconOffset = tester.getTopRight(find.ancestor(of: find.widgetWithIcon(IconButton, Icons.menu), matching: find.byType(ConstrainedBox)));
     expect(titleOffset.dx, iconOffset.dx + titleSpacing);
   });
 
@@ -884,7 +884,7 @@ void main() {
     // Test title spacing.
     final Finder collapsedTitle = find.text(title).last;
     final Offset titleOffset = tester.getTopLeft(collapsedTitle);
-    final Offset iconOffset = tester.getTopRight(find.widgetWithIcon(IconButton, Icons.menu));
+    final Offset iconOffset = tester.getTopRight(find.ancestor(of: find.widgetWithIcon(IconButton, Icons.menu), matching: find.byType(ConstrainedBox)));
     expect(titleOffset.dx, iconOffset.dx + appBarTheme.titleSpacing!);
   });
 
@@ -961,7 +961,7 @@ void main() {
     // Test title spacing.
     final Finder collapsedTitle = find.text(title).last;
     final Offset titleOffset = tester.getTopLeft(collapsedTitle);
-    final Offset iconOffset = tester.getTopRight(find.widgetWithIcon(IconButton, Icons.menu));
+    final Offset iconOffset = tester.getTopRight(find.ancestor(of: find.widgetWithIcon(IconButton, Icons.menu), matching: find.byType(ConstrainedBox)));
     expect(titleOffset.dx, iconOffset.dx + titleSpacing);
   });
 
@@ -1082,7 +1082,7 @@ Material _getAppBarMaterial(WidgetTester tester) {
     find.descendant(
       of: find.byType(AppBar),
       matching: find.byType(Material),
-    ),
+    ).first,
   );
 }
 

@@ -63,6 +63,7 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         title: 'Pirate app',
         home: Scaffold(
           appBar: AppBar(
@@ -167,7 +168,8 @@ void main() {
     });
 
     await tester.pumpWidget(
-      const MaterialApp(
+      MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         home: Center(
           child: LicensePage(),
         ),
@@ -220,7 +222,8 @@ void main() {
     });
 
     await tester.pumpWidget(
-      const MaterialApp(
+      MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         title: 'Pirate app',
         home: Center(
           child: LicensePage(
@@ -298,6 +301,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         theme: ThemeData(
+          useMaterial3: false,
           primaryTextTheme: const TextTheme(
             titleLarge: titleTextStyle,
             titleSmall: subtitleTextStyle,
@@ -384,7 +388,8 @@ void main() {
     });
 
     await tester.pumpWidget(
-      const MaterialApp(
+      MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         home: MediaQuery(
           data: MediaQueryData(
             padding: EdgeInsets.all(safeareaPadding),
@@ -830,7 +835,7 @@ void main() {
     const Color cardColor = Color(0xFF654321);
 
     await tester.pumpWidget(MaterialApp(
-      theme: ThemeData.light().copyWith(
+      theme: ThemeData.light(useMaterial3: false).copyWith(
         scaffoldBackgroundColor: scaffoldColor,
         cardColor: cardColor,
       ),
@@ -1051,7 +1056,12 @@ void main() {
 
   testWidgetsWithLeakTracking('Error handling test', (WidgetTester tester) async {
     LicenseRegistry.addLicense(() => Stream<LicenseEntry>.error(Exception('Injected failure')));
-    await tester.pumpWidget(const MaterialApp(home: Material(child: AboutListTile())));
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData(useMaterial3: false),
+        home: Material(child: AboutListTile())
+      )
+    );
     await tester.tap(find.byType(ListTile));
     await tester.pump();
     await tester.pump(const Duration(seconds: 2));
@@ -1082,7 +1092,8 @@ void main() {
     await tester.binding.setSurfaceSize(defaultSize);
 
     await tester.pumpWidget(
-      const MaterialApp(
+      MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         title: title,
         home: Scaffold(
           body: Directionality(
@@ -1145,7 +1156,8 @@ void main() {
     await tester.binding.setSurfaceSize(defaultSize);
 
     await tester.pumpWidget(
-      const MaterialApp(
+      MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         title: title,
         home: Scaffold(
           body: Directionality(

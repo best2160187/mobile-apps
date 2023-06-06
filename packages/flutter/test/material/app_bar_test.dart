@@ -10,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../rendering/mock_canvas.dart';
 import '../widgets/semantics_tester.dart';
+import 'search_anchor_test.dart';
 
 Widget buildSliverAppBarApp({
   bool floating = false,
@@ -700,9 +701,9 @@ void main() {
         theme: themeData,
         home: Scaffold(
           appBar: AppBar(
+            leading: IconButton(icon: const Icon(Icons.menu), onPressed: () {}),
             title: const Text('X'),
           ),
-          drawer: const Column(), // Doesn't really matter. Triggers a hamburger regardless.
         ),
       ),
     );
@@ -1366,13 +1367,19 @@ void main() {
   group('SliverAppBar elevation', () {
     Widget buildSliverAppBar(bool forceElevated, {double? elevation, double? themeElevation}) {
       return MaterialApp(
-        theme: ThemeData(appBarTheme: AppBarTheme(elevation: themeElevation)),
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            elevation: themeElevation,
+            scrolledUnderElevation: themeElevation,
+          ),
+        ),
         home: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
               title: const Text('Title'),
               forceElevated: forceElevated,
               elevation: elevation,
+              scrolledUnderElevation: elevation,
             ),
           ],
         ),
@@ -1391,8 +1398,10 @@ void main() {
 
       // Default elevation should be used by the material, but
       // the AppBar's elevation should not be specified by SliverAppBar.
+      // When useMaterial3 is true, and forceElevated is true, the default elevation
+      // should be the value of `scrolledUnderElevation` which is 3.0
       await tester.pumpWidget(buildSliverAppBar(true));
-      expect(getMaterial().elevation, useMaterial3 ? 0.0 : 4.0);
+      expect(getMaterial().elevation, useMaterial3 ? 3.0 : 4.0);
       expect(getAppBar().elevation, null);
 
       // SliverAppBar should use the specified elevation.
@@ -1790,7 +1799,10 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         // Test was designed against InkSplash so need to make sure that is used.
-        theme: ThemeData(splashFactory: InkSplash.splashFactory),
+        theme: ThemeData(
+          useMaterial3: false,
+          splashFactory: InkSplash.splashFactory
+        ),
         home: Center(
           child: AppBar(
             title: const Text('Abc'),
@@ -2456,10 +2468,8 @@ void main() {
     ));
 
     expect(darkTheme.colorScheme.brightness, Brightness.dark);
-    expect(SystemChrome.latestStyle, const SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.light,
-    ));
+    expect(SystemChrome.latestStyle?.statusBarBrightness, Brightness.dark);
+    expect(SystemChrome.latestStyle?.statusBarIconBrightness, Brightness.light);
   });
 
   testWidgets('AppBar draws a dark system bar for a light background', (WidgetTester tester) async {
@@ -2476,10 +2486,8 @@ void main() {
     );
 
     expect(lightTheme.colorScheme.brightness, Brightness.light);
-    expect(SystemChrome.latestStyle, const SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.light,
-      statusBarIconBrightness: Brightness.dark,
-    ));
+    expect(SystemChrome.latestStyle?.statusBarBrightness, Brightness.light);
+    expect(SystemChrome.latestStyle?.statusBarIconBrightness, Brightness.dark);
   });
 
   testWidgets('Default system bar brightness based on AppBar background color brightness.', (WidgetTester tester) async {
@@ -2506,10 +2514,8 @@ void main() {
         ? Brightness.dark
         : Brightness.light;
 
-      expect(SystemChrome.latestStyle, SystemUiOverlayStyle(
-        statusBarBrightness: appBarBrightness,
-        statusBarIconBrightness: onAppBarBrightness,
-      ));
+      expect(SystemChrome.latestStyle?.statusBarBrightness, appBarBrightness);
+      expect(SystemChrome.latestStyle?.statusBarIconBrightness, onAppBarBrightness);
     }
 
     // Using a dark theme.
@@ -2526,10 +2532,8 @@ void main() {
           ? Brightness.dark
           : Brightness.light;
 
-      expect(SystemChrome.latestStyle, SystemUiOverlayStyle(
-        statusBarBrightness: appBarBrightness,
-        statusBarIconBrightness: onAppBarBrightness,
-      ));
+      expect(SystemChrome.latestStyle?.statusBarBrightness, appBarBrightness);
+      expect(SystemChrome.latestStyle?.statusBarIconBrightness, onAppBarBrightness);
     }
   });
 
@@ -4238,7 +4242,7 @@ void main() {
     // By default, title widget should be to the right of the
     // leading widget and title spacing should be respected.
     Offset titleOffset = tester.getTopLeft(collapsedTitle);
-    Offset iconButtonOffset = tester.getTopRight(find.widgetWithIcon(IconButton, Icons.menu));
+    Offset iconButtonOffset = tester.getTopRight(find.ancestor(of: find.widgetWithIcon(IconButton, Icons.menu), matching: find.byType(ConstrainedBox)));
     expect(titleOffset.dx, iconButtonOffset.dx + titleSpacing);
 
     await tester.pumpWidget(buildWidget(centerTitle: true));
@@ -4263,7 +4267,7 @@ void main() {
     // The title widget should be to the right of the leading
     // widget with no spacing.
     titleOffset = tester.getTopLeft(collapsedTitle);
-    iconButtonOffset = tester.getTopRight(find.widgetWithIcon(IconButton, Icons.menu));
+    iconButtonOffset = tester.getTopRight(find.ancestor(of: find.widgetWithIcon(IconButton, Icons.menu), matching: find.byType(ConstrainedBox)));
     expect(titleOffset.dx, iconButtonOffset.dx);
 
     // Set centerTitle to true so the end of the title can reach
@@ -4331,7 +4335,7 @@ void main() {
     // By default, title widget should be to the right of the leading
     // widget and title spacing should be respected.
     Offset titleOffset = tester.getTopLeft(collapsedTitle);
-    Offset iconButtonOffset = tester.getTopRight(find.widgetWithIcon(IconButton, Icons.menu));
+    Offset iconButtonOffset = tester.getTopRight(find.ancestor(of: find.widgetWithIcon(IconButton, Icons.menu), matching: find.byType(ConstrainedBox)));
     expect(titleOffset.dx, iconButtonOffset.dx + titleSpacing);
 
     await tester.pumpWidget(buildWidget(centerTitle: true));
@@ -4355,7 +4359,7 @@ void main() {
     // The title widget should be to the right of the leading
     // widget with no spacing.
     titleOffset = tester.getTopLeft(collapsedTitle);
-    iconButtonOffset = tester.getTopRight(find.widgetWithIcon(IconButton, Icons.menu));
+    iconButtonOffset = tester.getTopRight(find.ancestor(of: find.widgetWithIcon(IconButton, Icons.menu), matching: find.byType(ConstrainedBox)));
     expect(titleOffset.dx, iconButtonOffset.dx);
 
     // Set centerTitle to true so the end of the title can reach
