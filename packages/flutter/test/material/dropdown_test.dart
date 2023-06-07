@@ -161,8 +161,9 @@ Widget buildFrame({
   double? menuMaxHeight,
   EdgeInsetsGeometry? padding,
   Alignment dropdownAlignment = Alignment.center,
+  ThemeData? theme,
 }) {
-  return TestApp(
+  final Widget app = TestApp(
     textDirection: textDirection,
     mediaSize: mediaSize,
     child: Material(
@@ -199,6 +200,13 @@ Widget buildFrame({
       ),
     ),
   );
+  if (theme != null) {
+    return MaterialApp(
+      theme: theme,
+      home: app,
+    );
+  }
+  return app;
 }
 
 Widget buildDropdownWithHint({
@@ -207,6 +215,7 @@ Widget buildDropdownWithHint({
   bool enableSelectedItemBuilder = false,
 }){
   return buildFrame(
+    theme: ThemeData(useMaterial3: false),
     mediaSize: const Size(800, 600),
     itemHeight: 100.0,
     alignment: alignment,
@@ -286,6 +295,7 @@ Future<void> checkDropdownColor(WidgetTester tester, {Color? color, bool isFormF
   const String text = 'foo';
   await tester.pumpWidget(
     MaterialApp(
+      theme: ThemeData(useMaterial3: false),
       home: Material(
         child: isFormField
             ? Form(
@@ -335,7 +345,7 @@ Future<void> checkDropdownColor(WidgetTester tester, {Color? color, bool isFormF
 void main() {
   testWidgets('Default dropdown golden', (WidgetTester tester) async {
     final Key buttonKey = UniqueKey();
-    Widget build() => buildFrame(buttonKey: buttonKey, onChanged: onChanged);
+    Widget build() => buildFrame(buttonKey: buttonKey, onChanged: onChanged, theme: ThemeData(useMaterial3: false));
     await tester.pumpWidget(build());
     final Finder buttonFinder = find.byKey(buttonKey);
     assert(tester.renderObject(buttonFinder).attached);
@@ -347,7 +357,7 @@ void main() {
 
   testWidgets('Expanded dropdown golden', (WidgetTester tester) async {
     final Key buttonKey = UniqueKey();
-    Widget build() => buildFrame(buttonKey: buttonKey, isExpanded: true, onChanged: onChanged);
+    Widget build() => buildFrame(buttonKey: buttonKey, isExpanded: true, onChanged: onChanged, theme: ThemeData(useMaterial3: false));
     await tester.pumpWidget(build());
     final Finder buttonFinder = find.byKey(buttonKey);
     assert(tester.renderObject(buttonFinder).attached);
@@ -609,6 +619,7 @@ void main() {
     // Regression test for https://github.com/flutter/flutter/issues/66870
     await tester.pumpWidget(
       MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         home: Scaffold(
           appBar: AppBar(),
           body: Column(
@@ -697,7 +708,7 @@ void main() {
     testWidgets('Dropdown button aligns selected menu item ($textDirection)', (WidgetTester tester) async {
       final Key buttonKey = UniqueKey();
 
-      Widget build() => buildFrame(buttonKey: buttonKey, textDirection: textDirection, onChanged: onChanged);
+      Widget build() => buildFrame(buttonKey: buttonKey, textDirection: textDirection, onChanged: onChanged, theme: ThemeData(useMaterial3: false));
 
       await tester.pumpWidget(build());
       final RenderBox buttonBox = tester.renderObject<RenderBox>(find.byKey(buttonKey));
@@ -2382,12 +2393,12 @@ void main() {
     tester.binding.focusManager.highlightStrategy = FocusHighlightStrategy.alwaysTraditional;
     final UniqueKey buttonKey = UniqueKey();
     final FocusNode focusNode = FocusNode(debugLabel: 'DropdownButton');
-    await tester.pumpWidget(buildFrame(buttonKey: buttonKey, onChanged: onChanged, focusNode: focusNode, autofocus: true));
+    await tester.pumpWidget(buildFrame(buttonKey: buttonKey, onChanged: onChanged, focusNode: focusNode, autofocus: true, theme: ThemeData(useMaterial3: false)));
     await tester.pumpAndSettle(); // Pump a frame for autofocus to take effect.
     expect(focusNode.hasPrimaryFocus, isTrue);
     expect(find.byType(Material), paints..rect(rect: const Rect.fromLTRB(348.0, 276.0, 452.0, 324.0), color: const Color(0x1f000000)));
 
-    await tester.pumpWidget(buildFrame(buttonKey: buttonKey, onChanged: onChanged, focusNode: focusNode, focusColor: const Color(0xff00ff00)));
+    await tester.pumpWidget(buildFrame(buttonKey: buttonKey, onChanged: onChanged, focusNode: focusNode, focusColor: const Color(0xff00ff00), theme: ThemeData(useMaterial3: false)));
     await tester.pumpAndSettle(); // Pump a frame for autofocus to take effect.
     expect(find.byType(Material), paints..rect(rect: const Rect.fromLTRB(348.0, 276.0, 452.0, 324.0), color: const Color(0x1f00ff00)));
   });
@@ -2696,6 +2707,7 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         home: Scaffold(
           body: Center(
             child: StatefulBuilder(
@@ -3169,6 +3181,7 @@ void main() {
     final UniqueKey itemKey = UniqueKey();
     await tester.pumpWidget(
       MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         home: Scaffold(
           body: Center(
             child: DropdownButton<String>(
@@ -3516,6 +3529,7 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         home: Scaffold(
           body: Center(
             child: DropdownButton<String>(

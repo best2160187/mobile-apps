@@ -501,6 +501,7 @@ void main() {
   testWidgets('OK Cancel button layout', (WidgetTester tester) async {
      Widget buildFrame(TextDirection textDirection) {
        return MaterialApp(
+         theme: ThemeData(useMaterial3: false),
          home: Material(
            child: Center(
              child: Builder(
@@ -1059,9 +1060,10 @@ void main() {
 
   testWidgets('DatePickerDialog is state restorable', (WidgetTester tester) async {
     await tester.pumpWidget(
-      const MaterialApp(
+      MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         restorationScopeId: 'app',
-        home: _RestorableDateRangePickerDialogTestWidget(),
+        home: const _RestorableDateRangePickerDialogTestWidget(),
       ),
     );
 
