@@ -950,6 +950,7 @@ void main() {
     const Color splashColor = Color(0xcafefeed);
 
     await tester.pumpWidget(MaterialApp(
+      theme: ThemeData(useMaterial3: false),
       home: FloatingActionButton(
         onPressed: () {},
         splashColor: splashColor,
@@ -1051,6 +1052,7 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         home: Scaffold(
           floatingActionButton: FloatingActionButton.extended(
             label: const Text('', key: labelKey),

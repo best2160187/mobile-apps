@@ -409,43 +409,43 @@ void main() {
     });
 
     testWidgets('startFloat', (WidgetTester tester) async {
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.startFloat));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.startFloat, useMaterial3: false));
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_leftOffsetX, _floatOffsetY));
     });
 
     testWidgets('centerFloat', (WidgetTester tester) async {
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.centerFloat));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.centerFloat, useMaterial3: false));
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_centerOffsetX, _floatOffsetY));
     });
 
     testWidgets('endFloat', (WidgetTester tester) async {
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.endFloat));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.endFloat, useMaterial3: false));
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_rightOffsetX, _floatOffsetY));
     });
 
     testWidgets('startDocked', (WidgetTester tester) async {
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.startDocked));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.startDocked, useMaterial3: false));
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_leftOffsetX, _dockedOffsetY));
     });
 
     testWidgets('centerDocked', (WidgetTester tester) async {
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.centerDocked));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.centerDocked, useMaterial3: false));
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_centerOffsetX, _dockedOffsetY));
     });
 
     testWidgets('endDocked', (WidgetTester tester) async {
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.endDocked));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.endDocked, useMaterial3: false));
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_rightOffsetX, _dockedOffsetY));
     });
 
     testWidgets('endContained', (WidgetTester tester) async {
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.endContained));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.endContained, useMaterial3: false));
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_rightOffsetX, _containedOffsetY));
     });
@@ -463,31 +463,31 @@ void main() {
     });
 
     testWidgets('miniStartFloat', (WidgetTester tester) async {
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.miniStartFloat));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.miniStartFloat, useMaterial3: false));
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_miniLeftOffsetX, _miniFloatOffsetY));
     });
 
     testWidgets('miniCenterFloat', (WidgetTester tester) async {
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.miniCenterFloat));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.miniCenterFloat, useMaterial3: false));
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_centerOffsetX, _miniFloatOffsetY));
     });
 
     testWidgets('miniEndFloat', (WidgetTester tester) async {
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.miniEndFloat));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.miniEndFloat, useMaterial3: false));
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_miniRightOffsetX, _miniFloatOffsetY));
     });
 
     testWidgets('miniStartDocked', (WidgetTester tester) async {
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.miniStartDocked));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.miniStartDocked, useMaterial3: false));
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_miniLeftOffsetX, _dockedOffsetY));
     });
 
     testWidgets('miniEndDocked', (WidgetTester tester) async {
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.miniEndDocked));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.miniEndDocked, useMaterial3: false));
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_miniRightOffsetX, _dockedOffsetY));
     });
@@ -501,7 +501,7 @@ void main() {
     });
 
     testWidgets('miniStartFloat, RTL', (WidgetTester tester) async {
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.miniStartFloat, textDirection: TextDirection.rtl));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.miniStartFloat, textDirection: TextDirection.rtl, useMaterial3: false));
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_miniRightOffsetX, _miniFloatOffsetY));
     });
@@ -509,13 +509,13 @@ void main() {
 
   group('Custom Floating Action Button Locations', () {
     testWidgets('Almost end float', (WidgetTester tester) async {
-      await tester.pumpWidget(_singleFabScaffold(_AlmostEndFloatFabLocation()));
+      await tester.pumpWidget(_singleFabScaffold(_AlmostEndFloatFabLocation(), useMaterial3: false));
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_rightOffsetX - 50, _floatOffsetY));
     });
 
     testWidgets('Almost end float, RTL', (WidgetTester tester) async {
-      await tester.pumpWidget(_singleFabScaffold(_AlmostEndFloatFabLocation(), textDirection: TextDirection.rtl));
+      await tester.pumpWidget(_singleFabScaffold(_AlmostEndFloatFabLocation(), textDirection: TextDirection.rtl, useMaterial3: false));
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_leftOffsetX + 50, _floatOffsetY));
     });
@@ -539,7 +539,7 @@ void main() {
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_centerOffsetX, _topOffsetY));
 
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.startFloat));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.startFloat, useMaterial3: false));
 
       expect(tester.binding.transientCallbackCount, greaterThan(0));
       await tester.pumpAndSettle();
@@ -547,7 +547,7 @@ void main() {
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_leftOffsetX, _floatOffsetY));
 
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.startDocked));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.startDocked, useMaterial3: false));
 
       expect(tester.binding.transientCallbackCount, greaterThan(0));
       await tester.pumpAndSettle();
@@ -557,11 +557,11 @@ void main() {
     });
 
     testWidgets('Moves between new locations and old locations', (WidgetTester tester) async {
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.endDocked));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.endDocked, useMaterial3: false));
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_rightOffsetX, _dockedOffsetY));
 
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.startDocked));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.startDocked, useMaterial3: false));
 
       expect(tester.binding.transientCallbackCount, greaterThan(0));
       await tester.pumpAndSettle();
@@ -569,7 +569,7 @@ void main() {
 
       expect(tester.getCenter(find.byType(FloatingActionButton)), const Offset(_leftOffsetX, _dockedOffsetY));
 
-      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.centerFloat));
+      await tester.pumpWidget(_singleFabScaffold(FloatingActionButtonLocation.centerFloat, useMaterial3: false));
 
       expect(tester.binding.transientCallbackCount, greaterThan(0));
       await tester.pumpAndSettle();
@@ -595,7 +595,7 @@ void main() {
 
       await tester.pumpWidget(_singleFabScaffold(
         FloatingActionButtonLocation.centerTop,
-        animator: animator,
+        animator: animator, useMaterial3: false
       ));
 
       expect(find.byType(FloatingActionButton), findsOneWidget);
@@ -605,6 +605,7 @@ void main() {
       await tester.pumpWidget(_singleFabScaffold(
         _AlmostEndFloatFabLocation(),
         animator: animator,
+        useMaterial3: false
       ));
 
       expect(tester.binding.transientCallbackCount, greaterThan(0));
@@ -693,6 +694,7 @@ void main() {
       bool resizeToAvoidBottomInset = true,
     }) {
       return MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         home: MediaQuery(
           data: data,
           child: Scaffold(
@@ -1646,9 +1648,11 @@ Widget _singleFabScaffold(
     FloatingActionButtonAnimator? animator,
     bool mini = false,
     TextDirection textDirection = TextDirection.ltr,
+    bool? useMaterial3,
   }
 ) {
   return MaterialApp(
+    theme: ThemeData(useMaterial3: useMaterial3),
     home: Directionality(
       textDirection: textDirection,
       child: Scaffold(

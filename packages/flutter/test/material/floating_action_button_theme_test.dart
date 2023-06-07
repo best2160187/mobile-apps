@@ -20,7 +20,9 @@ void main() {
   });
 
   testWidgets('Default values are used when no FloatingActionButton or FloatingActionButtonThemeData properties are specified', (WidgetTester tester) async {
+    final ThemeData theme = ThemeData(useMaterial3: false);
     await tester.pumpWidget(MaterialApp(
+      theme: theme,
       home: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () { },
@@ -31,14 +33,14 @@ void main() {
 
     // The color scheme values are guaranteed to be non null since the default
     // [ThemeData] creates it with [ColorScheme.fromSwatch].
-    expect(_getRawMaterialButton(tester).fillColor, ThemeData().colorScheme.secondary);
-    expect(_getRichText(tester).text.style!.color, ThemeData().colorScheme.onSecondary);
+    expect(_getRawMaterialButton(tester).fillColor, theme.colorScheme.secondary);
+    expect(_getRichText(tester).text.style!.color, theme.colorScheme.onSecondary);
 
     // These defaults come directly from the [FloatingActionButton].
     expect(_getRawMaterialButton(tester).elevation, 6);
     expect(_getRawMaterialButton(tester).highlightElevation, 12);
     expect(_getRawMaterialButton(tester).shape, const CircleBorder());
-    expect(_getRawMaterialButton(tester).splashColor, ThemeData().splashColor);
+    expect(_getRawMaterialButton(tester).splashColor, theme.splashColor);
     expect(_getRawMaterialButton(tester).constraints, const BoxConstraints.tightFor(width: 56.0, height: 56.0));
     expect(_getIconSize(tester).width, 24.0);
     expect(_getIconSize(tester).height, 24.0);
@@ -200,7 +202,7 @@ void main() {
     const TextStyle textStyle = TextStyle(letterSpacing: 2.0);
 
     await tester.pumpWidget(MaterialApp(
-      theme: ThemeData().copyWith(
+      theme: ThemeData(useMaterial3: false).copyWith(
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           extendedSizeConstraints: constraints,
           extendedIconLabelSpacing: iconLabelSpacing,
@@ -233,7 +235,7 @@ void main() {
     const TextStyle textStyle = TextStyle(letterSpacing: 2.0);
 
     await tester.pumpWidget(MaterialApp(
-      theme: ThemeData().copyWith(
+      theme: ThemeData(useMaterial3: false).copyWith(
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           extendedIconLabelSpacing: 25.0,
           extendedPadding: EdgeInsetsDirectional.only(start: 7.0, end: 8.0),
