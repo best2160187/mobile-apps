@@ -991,6 +991,7 @@ void main() {
 
   testWidgets('ListTile can be splashed and has correct splash color', (WidgetTester tester) async {
     final Widget buildApp = MaterialApp(
+      theme: ThemeData(useMaterial3: false),
       home: Material(
         child: Center(
           child: SizedBox(
@@ -1279,6 +1280,7 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         home: Material(
           child: Center(
             child: ListTile(
@@ -3571,6 +3573,7 @@ void main() {
     });
 
     testWidgets('ListTile text color', (WidgetTester tester) async {
+      final ThemeData theme = ThemeData(useMaterial3: false);
       Widget buildFrame({
         bool dense = false,
         bool enabled = true,
@@ -3578,7 +3581,7 @@ void main() {
         ListTileStyle? style,
       }) {
         return MaterialApp(
-          theme: ThemeData(useMaterial3: false),
+          theme: theme,
           home: Material(
             child: Center(
               child: Builder(
@@ -3599,8 +3602,6 @@ void main() {
           ),
         );
       }
-
-      final ThemeData theme = ThemeData();
 
       // ListTile - ListTileStyle.list (default).
       await tester.pumpWidget(buildFrame());
