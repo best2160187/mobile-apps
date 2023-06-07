@@ -851,6 +851,7 @@ void main() {
     final ScrollController scrollController = ScrollController();
     await tester.pumpWidget(
       MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         home: PrimaryScrollController(
           controller: scrollController,
           child: Scrollbar(
@@ -941,7 +942,7 @@ void main() {
   testWidgets('Scrollbar thumb color completes a hover animation', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
-        theme: ThemeData(scrollbarTheme: const ScrollbarThemeData(isAlwaysShown: true)),
+        theme: ThemeData(scrollbarTheme: const ScrollbarThemeData(isAlwaysShown: true), useMaterial3: false),
         home: const SingleChildScrollView(
           child: SizedBox(width: 4000.0, height: 4000.0),
         ),
@@ -986,7 +987,7 @@ void main() {
   testWidgets('Hover animation is not triggered by tap gestures', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
-        theme: ThemeData(scrollbarTheme: const ScrollbarThemeData(
+        theme: ThemeData(useMaterial3: false, scrollbarTheme: const ScrollbarThemeData(
           isAlwaysShown: true,
           showTrackOnHover: true,
         )),
@@ -1058,7 +1059,7 @@ void main() {
   testWidgets('ScrollbarThemeData.thickness replaces hoverThickness', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
-        theme: ThemeData(scrollbarTheme: ScrollbarThemeData(
+        theme: ThemeData(useMaterial3: false, scrollbarTheme: ScrollbarThemeData(
           thumbVisibility: MaterialStateProperty.resolveWith((Set<MaterialState> states) => true),
           trackVisibility: MaterialStateProperty.resolveWith((Set<MaterialState> states) {
             return states.contains(MaterialState.hovered);
@@ -1127,7 +1128,7 @@ void main() {
   testWidgets('ScrollbarThemeData.trackVisibility replaces showTrackOnHover', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
-        theme: ThemeData(scrollbarTheme: ScrollbarThemeData(
+        theme: ThemeData(useMaterial3: false, scrollbarTheme: ScrollbarThemeData(
           isAlwaysShown: true,
           trackVisibility: MaterialStateProperty.resolveWith((Set<MaterialState> states) {
             if (states.contains(MaterialState.hovered)) {
@@ -1192,7 +1193,7 @@ void main() {
   testWidgets('Scrollbar showTrackOnHover', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
-        theme: ThemeData(scrollbarTheme: const ScrollbarThemeData(
+        theme: ThemeData(useMaterial3: false, scrollbarTheme: const ScrollbarThemeData(
           isAlwaysShown: true,
           showTrackOnHover: true,
         )),
@@ -1385,6 +1386,7 @@ void main() {
     final ScrollController scrollController = ScrollController();
     await tester.pumpWidget(
       MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         home: PrimaryScrollController(
           controller: scrollController,
           child: Scrollbar(
@@ -1548,6 +1550,7 @@ void main() {
     final ScrollController scrollController = ScrollController();
     await tester.pumpWidget(
       MaterialApp(
+        theme: ThemeData(useMaterial3: false),
         home: PrimaryScrollController(
           controller: scrollController,
           child: Scrollbar(

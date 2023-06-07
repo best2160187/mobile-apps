@@ -250,34 +250,8 @@ void main() {
     // Pre-M3 settings that were hand coded.
     await tester.pumpWidget(
       _buildWidget(
-        NavigationBar(
-          destinations: const <Widget>[
-            NavigationDestination(
-              icon: Icon(Icons.ac_unit),
-              label: 'AC',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.access_alarm),
-              label: 'Alarm',
-            ),
-          ],
-          onDestinationSelected: (int i) {},
-        ),
-      ),
-    );
-
-    expect(_getMaterial(tester).color, const Color(0xffeaeaea));
-    expect(_getMaterial(tester).surfaceTintColor, null);
-    expect(_getMaterial(tester).elevation, 0);
-    expect(tester.getSize(find.byType(NavigationBar)).height, 80);
-    expect(_getIndicatorDecoration(tester)?.color, const Color(0x3d2196f3));
-    expect(_getIndicatorDecoration(tester)?.shape, RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)));
-
-    // M3 settings from the token database.
-    await tester.pumpWidget(
-      _buildWidget(
         Theme(
-          data: ThemeData.light().copyWith(useMaterial3: true),
+          data: ThemeData(useMaterial3: false),
           child: NavigationBar(
             destinations: const <Widget>[
               NavigationDestination(
@@ -295,11 +269,39 @@ void main() {
       ),
     );
 
-    expect(_getMaterial(tester).color, ThemeData().colorScheme.surface);
-    expect(_getMaterial(tester).surfaceTintColor, ThemeData().colorScheme.surfaceTint);
+    expect(_getMaterial(tester).color, const Color(0xffeaeaea));
+    expect(_getMaterial(tester).surfaceTintColor, null);
+    expect(_getMaterial(tester).elevation, 0);
+    expect(tester.getSize(find.byType(NavigationBar)).height, 80);
+    expect(_getIndicatorDecoration(tester)?.color, const Color(0x3d2196f3));
+    expect(_getIndicatorDecoration(tester)?.shape, RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)));
+
+    // M3 settings from the token database.
+    final ThemeData theme = ThemeData.light(useMaterial3: true);
+    await tester.pumpWidget(
+      _buildWidget(
+        NavigationBar(
+          destinations: const <Widget>[
+            NavigationDestination(
+              icon: Icon(Icons.ac_unit),
+              label: 'AC',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.access_alarm),
+              label: 'Alarm',
+            ),
+          ],
+          onDestinationSelected: (int i) {},
+        ),
+        useMaterial3: theme.useMaterial3
+      ),
+    );
+
+    expect(_getMaterial(tester).color, theme.colorScheme.surface);
+    expect(_getMaterial(tester).surfaceTintColor, theme.colorScheme.surfaceTint);
     expect(_getMaterial(tester).elevation, 3);
     expect(tester.getSize(find.byType(NavigationBar)).height, 80);
-    expect(_getIndicatorDecoration(tester)?.color, const Color(0xff2196f3));
+    expect(_getIndicatorDecoration(tester)?.color, theme.colorScheme.secondaryContainer);
     expect(_getIndicatorDecoration(tester)?.shape, const StadiumBorder());
   });
 
@@ -315,9 +317,9 @@ void main() {
             DefaultMaterialLocalizations.delegate,
             DefaultWidgetsLocalizations.delegate,
           ],
-          child: Directionality(
-            textDirection: TextDirection.ltr,
-            child: Navigator(
+          child: MaterialApp(
+            theme: ThemeData(useMaterial3: false),
+            home: Navigator(
               onGenerateRoute: (RouteSettings settings) {
                 return MaterialPageRoute<void>(
                   builder: (BuildContext context) {
@@ -1269,9 +1271,9 @@ void main() {
   });
 }
 
-Widget _buildWidget(Widget child) {
+Widget _buildWidget(Widget child, {bool? useMaterial3}) {
   return MaterialApp(
-    theme: ThemeData.light(),
+    theme: ThemeData.light(useMaterial3: useMaterial3),
     home: Scaffold(
       bottomNavigationBar: Center(
         child: child,

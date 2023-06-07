@@ -752,7 +752,7 @@ void main() {
     final Material appBarBackground = tester.widget<Material>(find.descendant(
       of: find.byType(AppBar),
       matching: find.byType(Material),
-    ));
+    ).first);
     expect(appBarBackground.color, Colors.white);
 
     final TextField textField = tester.widget<TextField>(find.byType(TextField));
@@ -762,7 +762,7 @@ void main() {
 
   // Regression test for: https://github.com/flutter/flutter/issues/66781
   testWidgets('text in search bar contrasts background (dark mode)', (WidgetTester tester) async {
-    final ThemeData themeData = ThemeData.dark();
+    final ThemeData themeData = ThemeData.dark(useMaterial3: false);
     final _TestSearchDelegate delegate = _TestSearchDelegate(
       defaultAppBarTheme: true,
     );

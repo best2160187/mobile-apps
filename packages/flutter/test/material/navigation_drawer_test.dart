@@ -118,23 +118,23 @@ void main() {
       'NavigationDrawer uses proper defaults when no parameters are given',
       (WidgetTester tester) async {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-    final ThemeData theme= ThemeData.from(colorScheme: const ColorScheme.light());
+    final ThemeData themeM3 = ThemeData.light(useMaterial3: true);
     // M3 settings from the token database.
     await tester.pumpWidget(
       _buildWidget(
         scaffoldKey,
         Theme(
-          data: ThemeData.light().copyWith(useMaterial3: true),
+          data: themeM3,
           child: NavigationDrawer(
             children: <Widget>[
-              Text('Headline', style: theme.textTheme.bodyLarge),
+              Text('Headline', style: themeM3.textTheme.bodyLarge),
               NavigationDrawerDestination(
-                icon: Icon(Icons.ac_unit, color: theme.iconTheme.color),
-                label: Text('AC', style: theme.textTheme.bodySmall),
+                icon: Icon(Icons.ac_unit, color: themeM3.iconTheme.color),
+                label: Text('AC', style: themeM3.textTheme.bodySmall),
               ),
               NavigationDrawerDestination(
-                icon: Icon(Icons.access_alarm, color: theme.iconTheme.color),
-                label: Text('Alarm', style: theme.textTheme.bodySmall),
+                icon: Icon(Icons.access_alarm, color: themeM3.iconTheme.color),
+                label: Text('Alarm', style: themeM3.textTheme.bodySmall),
               ),
             ],
             onDestinationSelected: (int i) {},
@@ -145,10 +145,10 @@ void main() {
     scaffoldKey.currentState!.openDrawer();
     await tester.pump(const Duration(seconds: 1));
 
-    expect(_getMaterial(tester).color, ThemeData().colorScheme.surface);
-    expect(_getMaterial(tester).surfaceTintColor, ThemeData().colorScheme.surfaceTint);
+    expect(_getMaterial(tester).color, themeM3.colorScheme.surface);
+    expect(_getMaterial(tester).surfaceTintColor, themeM3.colorScheme.surfaceTint);
     expect(_getMaterial(tester).elevation, 1);
-    expect(_getIndicatorDecoration(tester)?.color, const Color(0xff2196f3));
+    expect(_getIndicatorDecoration(tester)?.color, themeM3.colorScheme.secondaryContainer);
     expect(_getIndicatorDecoration(tester)?.shape, const StadiumBorder());
   });
 
